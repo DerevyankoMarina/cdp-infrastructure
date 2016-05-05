@@ -21,6 +21,10 @@ var buffer = require('vinyl-buffer');
 var debowerify = require('debowerify');
 var uglifyify = require('uglifyify');
 
+var eslint = require('gulp-eslint');
+var stylelint = require('gulp-stylelint');
+var plato = require('plato');
+
 var argv = require('minimist')(process.argv.slice(2), {
     string: 'env',
     default: {env: process.env.NODE_ENV || 'development'}
@@ -119,11 +123,30 @@ gulp.task('clean', function () {
     return del([conf.build.folder, conf.build.tmpFolders]);
 });
 
-gulp.task('build', ['style', 'images', 'html', 'script']);
+gulp.task('build', ['style', 'images', 'html', 'script', 'lint', 'lint-less']);
 
 gulp.task('watch', ['build'], function () {
     return gulp.watch(conf.less, ['style-watch']);
 });
+
+gulp.task('lint', function () {
+    return gulp.src(conf.js)
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
+});
+
+gulp.task('lint-less', function() {
+    return gulp.src(conf.less)
+      .pipe(stylelint({
+          reporters: [
+              {formatter: 'string', console: true}
+          ],
+          syntax: 'less'
+      }));
+});
+
+gulp.task('default', ['build', 'watch']);
 
 function errorHandler(error) {
     util.log(util.colors.red('Error'), error.message);
@@ -131,4 +154,4 @@ function errorHandler(error) {
     this.end();
 }
 
-gulp.task('default', ['build', 'watch']);
+
