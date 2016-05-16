@@ -1,3 +1,6 @@
+$ = window.jQuery = require ('jquery');
+require('bootstrap');
+
 var capitalize = require('capitalize-first-letter-cdp');
 var btn = document.getElementById('btn-hello');
 sdfdsf

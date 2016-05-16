@@ -13,3 +13,7 @@ bower_components
 
 ### Build folders
 build
+!src/less/build
+
+report
+less-report.txt

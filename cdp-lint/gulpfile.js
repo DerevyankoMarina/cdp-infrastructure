@@ -12,8 +12,6 @@ var gulpif = require('gulp-if');
 var imagemin = require('gulp-imagemin');
 var spritesmith = require('gulp.spritesmith');
 var htmlreplace = require('gulp-html-replace');
-var uglify = require('gulp-uglify');
-var filter = require('gulp-filter');
 
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
